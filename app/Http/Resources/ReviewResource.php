@@ -16,4 +16,9 @@ class ReviewResource extends JsonResource
     {
         return parent::toArray($request);
     }
+    
+    public function withResponse($request, $response)
+    {
+        $response->setEncodingOptions(JSON_UNESCAPED_SLASHES);
+    }
 }
