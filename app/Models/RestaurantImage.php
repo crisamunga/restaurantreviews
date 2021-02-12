@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class RestaurantImage extends Model
 {
@@ -14,7 +15,7 @@ class RestaurantImage extends Model
     public function getImageAttribute() {
         $image = $this->attributes['image'];
         if (isset($image)) {
-            return asset($image);
+            return url(Storage::url($image));
         }
         return $image;
     }
