@@ -38,7 +38,7 @@ class RestaurantController extends Controller
                 ->get();
         }
 
-        return RestaurantResource::collection($restaurants);
+        return RestaurantResource::collection($restaurants)->response()->setEncodingOptions(JSON_UNESCAPED_SLASHES);
     }
 
     /**
