@@ -61,7 +61,7 @@ class User extends Authenticatable
     public function getImageAttribute() {
         $image = $this->attributes['image'];
         if (isset($image)) {
-            return url($image);
+            return asset($image);
         }
         return $image;
     }

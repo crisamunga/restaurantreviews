@@ -11,6 +11,14 @@ class RestaurantImage extends Model
 
     protected $fillable = ['image', 'restaurant_id'];
 
+    public function getImageAttribute() {
+        $image = $this->attributes['image'];
+        if (isset($image)) {
+            return asset($image);
+        }
+        return $image;
+    }
+
     public function restaurant() {
         return $this->belongsTo(Restaurant::class);
     }
