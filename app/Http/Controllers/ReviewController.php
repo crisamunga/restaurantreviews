@@ -22,7 +22,7 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        return ReviewResource::collection(Review::all())->response()->setEncodingOptions(JSON_UNESCAPED_SLASHES);
+        return ReviewResource::collection(Review::with('user', 'restaurant')->get())->response()->setEncodingOptions(JSON_UNESCAPED_SLASHES);
     }
 
     /**
@@ -38,7 +38,7 @@ class ReviewController extends Controller
         $user = $request->user();
         $user->reviews()->save($review);
 
-        return (new ReviewResource($review))->response()->setStatusCode(201);
+        return (new ReviewResource($review->load('user', 'restaurant')))->response()->setStatusCode(201);
     }
 
     /**
@@ -50,7 +50,7 @@ class ReviewController extends Controller
         $this->authorize('uncomment', $review);
         $review->comment = "Deleted";
         $review->save();
-        return new ReviewResource($review);
+        return new ReviewResource($review->load('user', 'restaurant'));
     }
 
     /**
@@ -66,7 +66,7 @@ class ReviewController extends Controller
         $review->replied_on = now();
         $review->save();
 
-        return new ReviewResource($review);
+        return new ReviewResource($review->load('user', 'restaurant'));
     }
 
     /**
@@ -76,7 +76,7 @@ class ReviewController extends Controller
      */
     public function show(Review $review)
     {
-        return new ReviewResource($review);
+        return new ReviewResource($review->load('user', 'restaurant'));
     }
 
     /**
