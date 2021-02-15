@@ -28,8 +28,9 @@ Route::post("/login", [AuthController::class, "login"]);
 Route::post("/register", [AuthController::class, "register"]);
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::post("/logout", [AuthController::class, "logout"]);
     Route::apiResource('profile', ProfileController::class)->only(['index', 'store']);
-    Route::apiResource('reviews', ReviewController::class)->except('update');
+    Route::apiResource('reviews', ReviewController::class);
     Route::apiResource('restaurants', RestaurantController::class);
     Route::apiResource('users', UserController::class);
     Route::post("/reviews/{review}/remove_comment", [ReviewController::class, "uncomment"]);

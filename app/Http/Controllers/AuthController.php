@@ -53,4 +53,14 @@ class AuthController extends Controller
 
         return (new UserResource($user))->response()->setStatusCode(201);
     }
+
+    /**
+     * Revokes the token the user is currently using
+     *
+     * @param Request $request
+     */
+    public function logout(Request $request) {
+        $request->user()->currentAccessToken()->delete();
+        return response()->noContent();
+    }
 }

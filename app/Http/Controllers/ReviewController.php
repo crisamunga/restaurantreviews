@@ -42,6 +42,24 @@ class ReviewController extends Controller
     }
 
     /**
+     * Validate and store a newly created review.
+     *
+     * @param ReviewRequest $request
+     * @param Review $review
+     * @return \Illuminate\Http\JsonResponse|object
+     */
+    public function update(ReviewRequest $request, Review $review)
+    {
+        $validated = $request->validated();
+
+        $review->fill($validated);
+        $user = $request->user();
+        $user->reviews()->save($review);
+
+        return new ReviewResource($review->load('user', 'restaurant'));
+    }
+
+    /**
      * Removes a comment from a review
      *
      * @param Review $review
